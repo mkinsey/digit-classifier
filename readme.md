@@ -10,12 +10,14 @@ By building a matrix and using R's `image` function, we can visualize the provid
 
 ![A handwritten three](img/mnist3.png)
 
-This project was inspired by a [Kaggle Competition](https://www.kaggle.com/c/digit-recognizer/data).
-
+This project was inspired by the Digit Regognizer [Kaggle Competition](https://www.kaggle.com/c/digit-recognizer/data).
 
 ## LDA
 
+Linear Discriminant Analysis projects the vectors into a subspace that maximizes the between class variance. This projection can then be used as a naive classifier. Let us examine the effectiveness of this approach...
+
 ## KNN
+
 
 ## Results
 

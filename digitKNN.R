@@ -1,0 +1,35 @@
+# MKinsey
+# Digit Classification using KNN
+
+library(class)
+
+# read competition data file
+# For this script I am testing on the training data set in order to evaluate the accuracy myself
+train <- read.csv("train.csv")
+
+# suffle data
+size = nrow(train)
+train = train[sample(size), ]
+
+# form testing and training sets
+propTrain = 0.75  # proportion of dataset used to train
+
+trainSet = train[1:(size*propTrain), -1]
+trainLabels = train[1:(size*propTrain), 1]
+
+testSet = train[(size*propTrain):size, ]
+
+# run knn on training set
+fit = knn(trainSet, testSet[-1], trainLabels)
+
+# # test accuracy of the classifier
+# predictions = predict(fit, testSet[,-1])$class
+# 
+# # get missed predictions
+# missed = which(predictions != testSet[,1])
+# 
+# # find % accuracy
+# testSize = size * (1-propTrain)
+# accuracy = (testSize-length(missed))/testSize
+# cat("The KNN classifier had ",100*accuracy,"% accuracy.\n")
+# 
