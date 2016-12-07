@@ -2,6 +2,9 @@
 # Digit analysis using lda
 library(MASS)
 
+# get helper methods
+source("lda.R")
+
 # read competition data file
 # For this script I am testing on the training data set in order to evaluate the accuracy myself
 train <- read.csv("train.csv")
@@ -10,29 +13,23 @@ train <- read.csv("train.csv")
 size = nrow(train)
 train = train[sample(size), ]
 
-# need to remove colinear and constant columns
-# TODO: better method for calculating removed columns 
-# default tolerance = 0.0001, variance should be > tol^2
-train = train[,apply(train, 2, function(col) { length(unique(col)) > 3 })]
+# clean columns
+train = removeColinear(train)
+
+
+# proportion of dataset used to train
+propTrain = 0.75  
 
 # form testing and training sets
-propTrain = 0.75  # proportion of dataset used to train
-trainSet = train[1:(size*propTrain), ]
+trainSet = train[1:(size*propTrain), -1]
+trainLabels = train[1:(size*propTrain), 1]
 testSet = train[(size*propTrain):size, ]
 
-# run lda on training set
-fit = lda(trainSet[-1], trainSet[,1])
-
-# test accuracy of the classifier
-predictions = predict(fit, testSet[,-1])$class
-
-# get missed predictions
-missed = which(predictions != testSet[,1])
-
-# find % accuracy
-testSize = size * (1-propTrain)
-accuracy = (testSize-length(missed))/testSize
-cat("The Digit classifier had ",100*accuracy,"% accuracy.\n")
+# run lda on training set multiple times
+for (i in c(1:10)){
+  accuracy = runLDA(trainSet, testSet, trainLabels)
+  print("Run ", i, ": LDA classifier had ",100*accuracy,"% accuracy.\n")
+}
 
 # format output
 # finalprediction<- cbind(as.data.frame(1:nrow(predictions)),predictions)
