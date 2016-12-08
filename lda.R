@@ -12,14 +12,22 @@ removeColinear = function(df, tolerance=1e-8){
   })]
 }
 
+# remove constant columns 
+# for LDA, column variance > given tolerance squared (default 1e-4)
+removeConstant = function(df, n = 3){
+  df = df[,apply(df, 2, function(col) {
+    length(unique(col)) > n 
+  })]
+}
+
 # execute LDA and find accuracy
-runLDA = function(trainSet, testSet, trainLabels){
+runLDA = function(trainSet, testSet, trainLabels, testLabels){
   
   fit = lda(trainSet, trainLabels)
   
   # get missed predictions
   predictions = predict(fit, testSet)$class
-  missed = which(predictions != testSet[,1])
+  missed = which(predictions != testLabels)
   
   # find % accuracy
   testSize = size * (1-propTrain)

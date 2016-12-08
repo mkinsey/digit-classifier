@@ -14,21 +14,30 @@ size = nrow(train)
 train = train[sample(size), ]
 
 # clean columns
-train = removeColinear(train)
+trainC = removeConstant(train, n = 4)
+trainD = removeColinear(train, tolerance = 0.1)
 
 
 # proportion of dataset used to train
 propTrain = 0.75  
 
-# form testing and training sets
-trainSet = train[1:(size*propTrain), -1]
-trainLabels = train[1:(size*propTrain), 1]
-testSet = train[(size*propTrain):size, ]
-
+runs = 5
 # run lda on training set multiple times
-for (i in c(1:10)){
-  accuracy = runLDA(trainSet, testSet, trainLabels)
-  print("Run ", i, ": LDA classifier had ",100*accuracy,"% accuracy.\n")
+results = vector(length = runs)
+
+for (i in c(1:runs)){
+  
+  train = train[sample(size), ]
+  # form testing and training sets
+  trainSet = trainC[1:(size*propTrain), -1]
+  trainLabels = trainC[1:(size*propTrain), 1]
+  testSet = trainC[(size*propTrain):size, -1]
+  testLabels = trainC[(size*propTrain):size, 1]
+
+
+  accuracy = runLDA(trainSet, testSet, trainLabels, testLabels)
+  results[i] = accuracy
+  cat("Run ", i, ": LDA classifier had ", 100*accuracy,"% accuracy.\n")
 }
 
 # format output
