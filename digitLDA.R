@@ -7,32 +7,29 @@ source("lda.R")
 
 # read competition data file
 # For this script I am testing on the training data set in order to evaluate the accuracy myself
-train <- read.csv("train.csv")
+dat <- read.csv("train.csv")
 
-# suffle data
-size = nrow(train)
-train = train[sample(size), ]
+size = nrow(dat)
 
 # clean columns
-trainC = removeConstant(train, n = 4)
-trainD = removeColinear(train, tolerance = 0.1)
-
+train = removeConstant(dat)
 
 # proportion of dataset used to train
-propTrain = 0.75  
+propTrain = 0.90  
 
-runs = 5
 # run lda on training set multiple times
+runs = 2
 results = vector(length = runs)
 
 for (i in c(1:runs)){
-  
+
+  # suffle data
   train = train[sample(size), ]
   # form testing and training sets
-  trainSet = trainC[1:(size*propTrain), -1]
-  trainLabels = trainC[1:(size*propTrain), 1]
-  testSet = trainC[(size*propTrain):size, -1]
-  testLabels = trainC[(size*propTrain):size, 1]
+  trainSet = train[1:(size*propTrain), -1]
+  trainLabels = train[1:(size*propTrain), 1]
+  testSet = train[(size*propTrain):size, -1]
+  testLabels = train[(size*propTrain):size, 1]
 
 
   accuracy = runLDA(trainSet, testSet, trainLabels, testLabels)

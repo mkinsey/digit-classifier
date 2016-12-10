@@ -6,7 +6,7 @@
 
 # remove colinear columns 
 # for LDA, column variance > given tolerance squared (default 1e-4)
-removeColinear = function(df, tolerance=1e-8){
+removeColinear = function(df, tolerance=0.1){
   df = df[,apply(df, 2, function(col) {
     var(col) > tolerance
   })]
@@ -14,7 +14,7 @@ removeColinear = function(df, tolerance=1e-8){
 
 # remove constant columns 
 # for LDA, column variance > given tolerance squared (default 1e-4)
-removeConstant = function(df, n = 3){
+removeConstant = function(df, n = 4){
   df = df[,apply(df, 2, function(col) {
     length(unique(col)) > n 
   })]
