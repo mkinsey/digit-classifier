@@ -30,3 +30,13 @@ testSize = size * (1-propTrain)
 accuracy = (testSize-length(missed))/testSize
 cat("The KNN classifier had ",100*accuracy,"% accuracy.\n")
 
+# KNN
+# PCA using SVD
+d_pca = prcomp(trainSet)
+
+train_pca = as.matrix(trainSet) %*% d_pca$rotation[,1:150]  # columns are eigenvectors, use first 150 principal components
+test_pca = as.matrix(testSet[,-1]) %*% d_pca$rotation[,1:150]
+fit2 = knn(train_pca, test_pca, trainLabels)
+missed2 = which(fit2 != testSet[,1])
+accuracy2 = (testSize-length(missed2))/testSize
+cat("The KNN + PCA classifier had ",100*accuracy2,"% accuracy.\n")

@@ -18,16 +18,26 @@ LDA cannot be used when within-class covariance matricies are singular, so the f
 
 In order to evaluate the accuracy of the classification, I am randomly dividing the labeled data set (42,000 images) into a training and testing data set a 9:1 ratio.
 
+### Result
+
+Classification using LDA had an accuracy of about 86%. It was efficient enough that multiple trials could be run in the span of a few minutes on a personal machine. 
+
 ## k-NN
 
 The k-Nearest Neighbors algorithm uses the euclidean distance between vectors to determine the classification of training vectors.
 
-As with LDA, the data set is randomly divided into training and testing data sets, at a ration of 9:1. 
+As with LDA, the data set is randomly divided into training and testing data sets, at a ratio of 9:1. 
 
-## Results
-
-Classification using LDA had an accuracy of about 86%. It was efficient enough that multiple trials could be run in the span of a few minutes on a personal machine. 
+### Result
 
 Classification using k-NN had an accuracy of about 96%. Because this method is more computationally complex than LDA, a single trial could take more than 15 minutes.
 
- 
+
+## k-NN with PCA
+
+The approach using k-Nearest Neighbors is an effective classifier, but is too slow for everyday use. Principal component analysis can be used for dimensionality reduction by orthogonally transforming the data. The goal of PCA is to reduce the number of dimensions, while retaining as much varaiance as possible in the data set. 
+
+### Result 
+
+When applying PCA to the MNIST data, the first 150 principal components accounted for about 95% of the variance in the data. We can then use k-NN on the reduced dataset, with 150 variables per image rather than 785. This is much more computationally efficient and in my testing was actually slighly more accurate, at 97%.
+
