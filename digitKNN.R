@@ -12,7 +12,7 @@ size = nrow(train)
 train = train[sample(size), ]
 
 # form testing and training sets
-propTrain = 0.75  # proportion of dataset used to train
+propTrain = 0.9  # proportion of dataset used to train
 
 trainSet = train[1:(size*propTrain), -1]
 trainLabels = train[1:(size*propTrain), 1]
@@ -22,14 +22,11 @@ testSet = train[(size*propTrain):size, ]
 # run knn on training set
 fit = knn(trainSet, testSet[-1], trainLabels)
 
-# # test accuracy of the classifier
-# predictions = predict(fit, testSet[,-1])$class
-# 
-# # get missed predictions
-# missed = which(predictions != testSet[,1])
-# 
-# # find % accuracy
-# testSize = size * (1-propTrain)
-# accuracy = (testSize-length(missed))/testSize
-# cat("The KNN classifier had ",100*accuracy,"% accuracy.\n")
-# 
+# get missed predictions
+missed = which(fit != testSet[,1])
+
+# find % accuracy
+testSize = size * (1-propTrain)
+accuracy = (testSize-length(missed))/testSize
+cat("The KNN classifier had ",100*accuracy,"% accuracy.\n")
+

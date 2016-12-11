@@ -1,7 +1,5 @@
 # Exploration in classification using MNIST data
 
-## Objective
-
 The aim of this project is to predict handwritten digits from the famous MNIST dataset. For this 
 project, the data representing one image comes in the form of 784 values, 
 making a 28 by 28 pixel image. Each of the values can range between 0 and 255. 
@@ -20,11 +18,16 @@ LDA cannot be used when within-class covariance matricies are singular, so the f
 
 In order to evaluate the accuracy of the classification, I am randomly dividing the labeled data set (42,000 images) into a training and testing data set a 9:1 ratio.
 
-## KNN
+## k-NN
 
+The k-Nearest Neighbors algorithm uses the euclidean distance between vectors to determine the classification of training vectors.
+
+As with LDA, the data set is randomly divided into training and testing data sets, at a ration of 9:1. 
 
 ## Results
 
 Classification using LDA had an accuracy of about 86%. It was efficient enough that multiple trials could be run in the span of a few minutes on a personal machine. 
+
+Classification using k-NN had an accuracy of about 96%. Because this method is more computationally complex than LDA, a single trial could take more than 15 minutes.
 
  
