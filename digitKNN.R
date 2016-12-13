@@ -32,11 +32,10 @@ cat("The KNN classifier had ",100*accuracy,"% accuracy.\n")
 
 # KNN
 # PCA using SVD
-d_pca = prcomp(trainSet)
-
-train_pca = as.matrix(trainSet) %*% d_pca$rotation[,1:150]  # columns are eigenvectors, use first 150 principal components
-test_pca = as.matrix(testSet[,-1]) %*% d_pca$rotation[,1:150]
-fit2 = knn(train_pca, test_pca, trainLabels)
-missed2 = which(fit2 != testSet[,1])
-accuracy2 = (testSize-length(missed2))/testSize
+dPca = prcomp(trainSet)
+trainPca = as.matrix(trainSet) %*% dPca$rotation[ , 1:150]  # columns are eigenvectors, use first 150 principal components
+testPca = as.matrix(testSet[ , -1]) %*% dPca$rotation[ , 1:150]
+fitPca = knn(trainPca, testPca, trainLabels)
+missedPca = which(fitPca != testSet[,1])
+accuracyPca = (testSize - length(missedPca)) / testSize
 cat("The KNN + PCA classifier had ",100*accuracy2,"% accuracy.\n")
