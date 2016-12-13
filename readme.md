@@ -14,7 +14,7 @@ This project was inspired by the Digit Regognizer [Kaggle Competition](https://w
 
 Linear Discriminant Analysis projects the vectors into a subspace that maximizes the between class variance. This projection can then be used as a naive classifier. Let us examine the effectiveness of this approach.
 
-LDA cannot be used when within-class covariance matricies are singular, so the first step is to remove all low variability factors. The following code sample uses the number of unique values in each column (factor) to remove low variability columns from a data frame, `df`, in an efficient manner.  
+LDA cannot be used when within-class covariance matrices  are singular, so the first step is to remove all low variability factors. The following code sample uses the number of unique values in each column (factor) to remove low variability columns from a data frame, `df`, in an efficient manner.  
 
 ```R
 df = df[,apply(df, 2, function(col) {
@@ -22,7 +22,7 @@ df = df[,apply(df, 2, function(col) {
 })]
 ```
 
-In the context of our problem, these factors would be pixels are similiar in every image, such as the corners. I used the number of unique values in each column (factor) to remove low variability columns. This reduced the number of factors by about 100 - 120. 
+In the context of our problem, these factors would be pixels are similar in every image, such as the corners. I used the number of unique values in each column (factor) to remove low variability columns. This reduced the number of factors by about 100 - 120. 
 
 In order to evaluate the accuracy of the classification, I am randomly dividing the labeled data set (42,000 images) into a training and testing data set a 9:1 ratio.
 
@@ -43,7 +43,7 @@ Classification using k-NN had an accuracy of **about 96%**. Because this method 
 
 ## k-NN with PCA
 
-The approach using k-Nearest Neighbors is an effective classifier, but is too slow for everyday use. Principal component analysis can be used for dimensionality reduction by orthogonally transforming the data. The goal of PCA is to reduce the number of dimensions, while retaining as much varaiance as possible in the data set. 
+The approach using k-Nearest Neighbors is an effective classifier, but is too slow for everyday use. Principal component analysis can be used for dimensionality reduction by orthogonally transforming the data. The goal of PCA is to reduce the number of dimensions, while retaining as much variance as possible in the data set. 
 
 The following sample demonstrates how to use PCA in conjunction with k-NN. First, we apply PCA to the training data set. We then project the original train and test data onto the first 150 principal components. This new data is then passed to the knn function.  
 
@@ -56,5 +56,5 @@ fitPca = knn(trainPca, testPca, trainLabels)
 
 ### Result 
 
-When applying PCA to the MNIST data, the first 150 principal components accounted for about 95% of the variance in the data. We can then use k-NN on the reduced dataset, with 150 variables per image rather than 785. This is much more computationally efficient and in my testing was actually slighly more accurate, with **97% of the images correctly identified**.
+When applying PCA to the MNIST data, the first 150 principal components accounted for about 95% of the variance in the data. We can then use k-NN on the reduced dataset, with 150 variables per image rather than 785. This is much more computationally efficient and in my testing was actually slightly more accurate, with **97% of the images correctly identified**.
 
