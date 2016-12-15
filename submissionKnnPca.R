@@ -12,7 +12,9 @@ trainLabels = train[, 1]
 # KNN
 # PCA using SVD
 dPca = prcomp(trainSet)
-trainPca = as.matrix(trainSet) %*% dPca$rotation[ , 1:150]  # columns are eigenvectors, use first 150 principal components
+
+# columns are eigenvectors, use first 150 principal components
+trainPca = as.matrix(trainSet) %*% dPca$rotation[ , 1:150]  
 testPca = as.matrix(test) %*% dPca$rotation[ , 1:150]
 fitPca = knn(trainPca, testPca, trainLabels)
 
